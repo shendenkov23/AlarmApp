@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		791A47DC23F89078004627C3 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791A47DB23F89078004627C3 /* DateFormatter.swift */; };
+		796326F823F87C13006F0022 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796326F723F87C13006F0022 /* UIColor.swift */; };
+		796326FA23F880DF006F0022 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796326F923F880DF006F0022 /* Core.swift */; };
+		796326FC23F8810F006F0022 /* AudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796326FB23F8810F006F0022 /* AudioService.swift */; };
+		796326FE23F882EB006F0022 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796326FD23F882EB006F0022 /* Constants.swift */; };
 		79E7DB4423F5E96B00F63FCF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E7DB4323F5E96B00F63FCF /* AppDelegate.swift */; };
 		79E7DB4823F5E96B00F63FCF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E7DB4723F5E96B00F63FCF /* ViewController.swift */; };
 		79E7DB4B23F5E96B00F63FCF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79E7DB4923F5E96B00F63FCF /* Main.storyboard */; };
@@ -20,6 +25,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		791A47DB23F89078004627C3 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
+		796326F723F87C13006F0022 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		796326F923F880DF006F0022 /* Core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
+		796326FB23F8810F006F0022 /* AudioService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioService.swift; sourceTree = "<group>"; };
+		796326FD23F882EB006F0022 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		79E7DB4023F5E96B00F63FCF /* AlarmApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlarmApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		79E7DB4323F5E96B00F63FCF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		79E7DB4723F5E96B00F63FCF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -45,6 +55,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		796326FF23F8832F006F0022 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				796326F923F880DF006F0022 /* Core.swift */,
+				796326FB23F8810F006F0022 /* AudioService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		79E7DB3723F5E96B00F63FCF = {
 			isa = PBXGroup;
 			children = (
@@ -64,16 +83,18 @@
 		79E7DB4223F5E96B00F63FCF /* AlarmApp */ = {
 			isa = PBXGroup;
 			children = (
-				79E7DB5C23F5FA7000F63FCF /* Extensions */,
+				796326FD23F882EB006F0022 /* Constants.swift */,
+				796326FF23F8832F006F0022 /* Services */,
 				79E7DB4323F5E96B00F63FCF /* AppDelegate.swift */,
 				79E7DB4723F5E96B00F63FCF /* ViewController.swift */,
-				79E7DB4923F5E96B00F63FCF /* Main.storyboard */,
 				79E7DB4C23F5E97200F63FCF /* Assets.xcassets */,
-				79E7DB4E23F5E97200F63FCF /* LaunchScreen.storyboard */,
+				79E7DB5C23F5FA7000F63FCF /* Extensions */,
 				79E7DB5123F5E97200F63FCF /* Info.plist */,
-				79E7DB5B23F5F98300F63FCF /* Sounds */,
 				79E7DB5F23F6175100F63FCF /* InputAccessory.swift */,
 				79E7DB6123F6176500F63FCF /* InputAccessory.xib */,
+				79E7DB4E23F5E97200F63FCF /* LaunchScreen.storyboard */,
+				79E7DB4923F5E96B00F63FCF /* Main.storyboard */,
+				79E7DB5B23F5F98300F63FCF /* Sounds */,
 			);
 			path = AlarmApp;
 			sourceTree = "<group>";
@@ -91,6 +112,8 @@
 			isa = PBXGroup;
 			children = (
 				79E7DB5D23F5FA8000F63FCF /* UIView.swift */,
+				796326F723F87C13006F0022 /* UIColor.swift */,
+				791A47DB23F89078004627C3 /* DateFormatter.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -169,10 +192,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				791A47DC23F89078004627C3 /* DateFormatter.swift in Sources */,
+				796326FA23F880DF006F0022 /* Core.swift in Sources */,
 				79E7DB4823F5E96B00F63FCF /* ViewController.swift in Sources */,
 				79E7DB5E23F5FA8000F63FCF /* UIView.swift in Sources */,
 				79E7DB4423F5E96B00F63FCF /* AppDelegate.swift in Sources */,
 				79E7DB6023F6175100F63FCF /* InputAccessory.swift in Sources */,
+				796326FC23F8810F006F0022 /* AudioService.swift in Sources */,
+				796326F823F87C13006F0022 /* UIColor.swift in Sources */,
+				796326FE23F882EB006F0022 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

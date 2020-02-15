@@ -19,4 +19,13 @@ extension UIView {
       layer.cornerRadius = abs(CGFloat(Int(newValue * 100)) / 100)
     }
   }
+  
+  static var nib: UINib? {
+    return UINib(nibName: String(describing: self), bundle: nil)
+  }
+  
+  static func instantiate<T: UIView>() -> T? {
+    return nib?.instantiate(withOwner: nil, options: nil).first as? T
+  }
 }
+
