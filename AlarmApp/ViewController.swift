@@ -8,6 +8,9 @@
 
 import AVFoundation
 import UIKit
+import UserNotifications
+
+let alarmNotificationIdentifier = "com.alarm"
 
 enum SleepAppState {
   case `default`
@@ -20,13 +23,31 @@ enum SleepAppState {
     case .default: return "Press play"
     case .playing: return "Playing"
     case .recording: return "Recording"
-    case .alarm: return "Wake up!"
+    case .alarm: return "Alarm. Wake up!"
     }
   }
 }
 
 class ViewController: UIViewController {
-  var currentState: SleepAppState = .default
+  var currentState: SleepAppState = .default {
+    didSet {
+      lblDescription.text = currentState.description
+    }
+  }
+  
+  private var selectedAsleepTime: TimeInterval?
+  private var asleepTimer: Timer?
+  
+  private var selectedAlarmTime: Date? {
+    didSet {
+      if let selectedAlarmTime = selectedAlarmTime {
+        let formatter = DateFormatter(dateFormat: DateFormat.alarmTime.rawValue)
+        lblAlarmTime.text = formatter.string(from: selectedAlarmTime)
+      } else {
+        lblAlarmTime.text = "Select"
+      }
+    }
+  }
   
   // MARK: - IBOutlets
   
@@ -39,13 +60,20 @@ class ViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view.
+    UNUserNotificationCenter.current().delegate = self
+    Core.shared.audioService.delegate = self
   }
   
   // MARK: -
   
-  private func selectTimer(min: Int) {
-    lblSleepTimer.text = "\(min) min"
+  private func selectTimer(min: Int?) {
+    if let min = min {
+      lblSleepTimer.text = "\(min) min"
+      selectedAsleepTime = TimeInterval(min * 60)
+    } else {
+      lblSleepTimer.text = "off"
+      selectedAsleepTime = nil
+    }
   }
   
   private func makeAlarmTimeInputAccessory(doneAction: @escaping SimpleAction,
@@ -59,8 +87,8 @@ class ViewController: UIViewController {
   
   private func makeSleepTimerActionSheet() -> UIAlertController {
     let sheet = UIAlertController(title: "Sleep timer", message: nil, preferredStyle: .actionSheet)
-    sheet.addAction(UIAlertAction(title: "off", style: .default, handler: { _ in
-      //TODO: off action
+    sheet.addAction(UIAlertAction(title: "off", style: .default, handler: { [weak self] _ in
+      self?.selectTimer(min: nil)
     }))
     let timers = [1, 5, 10, 15, 20]
     timers.forEach { min in
@@ -70,6 +98,27 @@ class ViewController: UIViewController {
     }
     sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
     return sheet
+  }
+  
+  private func makeAlarmNotification(date: Date) {
+    let dateComponents = Calendar.current.dateComponents(.init(arrayLiteral: .hour, .minute), from: date)
+    let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+    
+    let content = UNMutableNotificationContent()
+    
+    content.title = "Wake Up"
+    content.body = "The early bird catches the worm, but the second mouse gets the cheese."
+    content.sound = .default
+    
+    let request = UNNotificationRequest(identifier: alarmNotificationIdentifier, content: content, trigger: trigger)
+    
+    UNUserNotificationCenter.current().add(request) { _ in }
+  }
+  
+  private func showError(_ error: String) {
+    let alert = UIAlertController(title: nil, message: error, preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+    present(alert, animated: true, completion: nil)
   }
   
   // MARK: - Actions
@@ -85,12 +134,11 @@ class ViewController: UIViewController {
     
     let picker = UIDatePicker()
     picker.datePickerMode = .time
+    
     dummy.inputView = picker
     
     guard let accessory = makeAlarmTimeInputAccessory(doneAction: { [weak self] in
-      let formatter = DateFormatter(dateFormat: DateFormat.alarmTime.rawValue)
-      self?.lblAlarmTime.text = formatter.string(from: picker.date)
-      
+      self?.selectedAlarmTime = picker.date
       dummy.resignFirstResponder()
       dummy.removeFromSuperview()
     }, cancelAction: {
@@ -103,20 +151,65 @@ class ViewController: UIViewController {
   }
   
   @IBAction private func btnPlayPressed(_ sender: UIButton) {
+    asleepTimer?.invalidate()
+    asleepTimer = nil
+    
     switch currentState {
     case .default:
-      Core.shared.audioService.playNature()
-      currentState = .playing
+      guard let asleepTime = selectedAsleepTime else {
+        showError("Select asleep time")
+        return
+      }
+      
+      guard let alarmTime = selectedAlarmTime else {
+        showError("Select alarm time")
+        return
+      }
+      
+      Core.shared.audioService.play(.nature)
+      makeAlarmNotification(date: alarmTime)
       btnPlay.setTitle("Pause", for: .normal)
-    case .playing:
+      
+      asleepTimer = Timer.scheduledTimer(withTimeInterval: asleepTime, repeats: false) { [weak self] _ in
+        Core.shared.audioService.stop()
+        self?.currentState = .recording
+        
+        self?.asleepTimer?.invalidate()
+        self?.asleepTimer = nil
+      }
+      
+      currentState = .playing
+    case .playing, .recording, .alarm:
       Core.shared.audioService.stop()
-      currentState = .default
       btnPlay.setTitle("Play", for: .normal)
-    case .recording:
-      break
-    case .alarm:
-      break
+      UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [alarmNotificationIdentifier])
+      currentState = .default
     }
-    lblDescription.text = currentState.description
+  }
+}
+
+// MARK: - UNUserNotificationCenterDelegate
+
+extension ViewController: UNUserNotificationCenterDelegate {
+  func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    asleepTimer?.invalidate()
+    asleepTimer = nil
+
+    Core.shared.audioService.play(.alarm)
+    currentState = .alarm
+    btnPlay.setTitle("Pause", for: .normal)
+    completionHandler([])
+  }
+}
+
+// MARK: - AudioServiceDelegate
+
+extension ViewController: AudioServiceDelegate {
+  func didPlayToEnd(soundType: SoundType) {
+    if soundType == .alarm {
+      Core.shared.audioService.stop()
+      btnPlay.setTitle("Play", for: .normal)
+      currentState = .default
+    }
   }
 }

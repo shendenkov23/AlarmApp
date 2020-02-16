@@ -2,8 +2,8 @@
 //  InputAccessory.swift
 //  AlarmApp
 //
-//  Created by iDeveloper on 14.02.2020.
-//  Copyright © 2020 iDeveloper. All rights reserved.
+//  Created by shendenkov23 on 14.02.2020.
+//  Copyright © 2020 shendenkov23. All rights reserved.
 //
 
 import UIKit

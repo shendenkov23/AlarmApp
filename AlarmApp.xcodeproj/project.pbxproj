@@ -55,6 +55,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		791A47DD23F89823004627C3 /* InputAccessory */ = {
+			isa = PBXGroup;
+			children = (
+				79E7DB5F23F6175100F63FCF /* InputAccessory.swift */,
+				79E7DB6123F6176500F63FCF /* InputAccessory.xib */,
+			);
+			path = InputAccessory;
+			sourceTree = "<group>";
+		};
 		796326FF23F8832F006F0022 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -90,8 +99,7 @@
 				79E7DB4C23F5E97200F63FCF /* Assets.xcassets */,
 				79E7DB5C23F5FA7000F63FCF /* Extensions */,
 				79E7DB5123F5E97200F63FCF /* Info.plist */,
-				79E7DB5F23F6175100F63FCF /* InputAccessory.swift */,
-				79E7DB6123F6176500F63FCF /* InputAccessory.xib */,
+				791A47DD23F89823004627C3 /* InputAccessory */,
 				79E7DB4E23F5E97200F63FCF /* LaunchScreen.storyboard */,
 				79E7DB4923F5E96B00F63FCF /* Main.storyboard */,
 				79E7DB5B23F5F98300F63FCF /* Sounds */,
