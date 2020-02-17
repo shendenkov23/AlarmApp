@@ -9,15 +9,13 @@
 import Foundation
 
 class Core {
-
   let audioService = AudioService()
+  let recordingService = RecordingService()
   
   // MARK: - Singleton
   
   static let shared = Core()
-  private init() { }
+  private init() {}
   
   // MARK: -
-  
-  
 }

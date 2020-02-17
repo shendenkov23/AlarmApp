@@ -172,6 +172,7 @@ class ViewController: UIViewController {
       
       asleepTimer = Timer.scheduledTimer(withTimeInterval: asleepTime, repeats: false) { [weak self] _ in
         Core.shared.audioService.stop()
+        Core.shared.recordingService.startRecording()
         self?.currentState = .recording
         
         self?.asleepTimer?.invalidate()
@@ -179,7 +180,10 @@ class ViewController: UIViewController {
       }
       
       currentState = .playing
-    case .playing, .recording, .alarm:
+    case .recording:
+      Core.shared.recordingService.finishRecording()
+      fallthrough
+    case .playing, .alarm:
       Core.shared.audioService.stop()
       btnPlay.setTitle("Play", for: .normal)
       UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [alarmNotificationIdentifier])
@@ -192,9 +196,10 @@ class ViewController: UIViewController {
 
 extension ViewController: UNUserNotificationCenterDelegate {
   func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    Core.shared.recordingService.finishRecording()
     asleepTimer?.invalidate()
     asleepTimer = nil
-
+    
     Core.shared.audioService.play(.alarm)
     currentState = .alarm
     btnPlay.setTitle("Pause", for: .normal)

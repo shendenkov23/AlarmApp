@@ -12,6 +12,7 @@
 		796326FA23F880DF006F0022 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796326F923F880DF006F0022 /* Core.swift */; };
 		796326FC23F8810F006F0022 /* AudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796326FB23F8810F006F0022 /* AudioService.swift */; };
 		796326FE23F882EB006F0022 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796326FD23F882EB006F0022 /* Constants.swift */; };
+		799FD55623FA0DE40041162C /* RecordingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799FD55523FA0DE40041162C /* RecordingService.swift */; };
 		79E7DB4423F5E96B00F63FCF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E7DB4323F5E96B00F63FCF /* AppDelegate.swift */; };
 		79E7DB4823F5E96B00F63FCF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E7DB4723F5E96B00F63FCF /* ViewController.swift */; };
 		79E7DB4B23F5E96B00F63FCF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79E7DB4923F5E96B00F63FCF /* Main.storyboard */; };
@@ -30,6 +31,7 @@
 		796326F923F880DF006F0022 /* Core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
 		796326FB23F8810F006F0022 /* AudioService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioService.swift; sourceTree = "<group>"; };
 		796326FD23F882EB006F0022 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		799FD55523FA0DE40041162C /* RecordingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingService.swift; sourceTree = "<group>"; };
 		79E7DB4023F5E96B00F63FCF /* AlarmApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlarmApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		79E7DB4323F5E96B00F63FCF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		79E7DB4723F5E96B00F63FCF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 			children = (
 				796326F923F880DF006F0022 /* Core.swift */,
 				796326FB23F8810F006F0022 /* AudioService.swift */,
+				799FD55523FA0DE40041162C /* RecordingService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -207,6 +210,7 @@
 				79E7DB4423F5E96B00F63FCF /* AppDelegate.swift in Sources */,
 				79E7DB6023F6175100F63FCF /* InputAccessory.swift in Sources */,
 				796326FC23F8810F006F0022 /* AudioService.swift in Sources */,
+				799FD55623FA0DE40041162C /* RecordingService.swift in Sources */,
 				796326F823F87C13006F0022 /* UIColor.swift in Sources */,
 				796326FE23F882EB006F0022 /* Constants.swift in Sources */,
 			);
